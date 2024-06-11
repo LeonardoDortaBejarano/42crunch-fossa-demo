@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.user.User;
 
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
 import java.util.Optional;
 
@@ -22,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("auth")
-@CrossOrigin(origins = "http://localhost:4200")
 
 public class AuthController {
 

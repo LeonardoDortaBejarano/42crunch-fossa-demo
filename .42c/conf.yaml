@@ -1,0 +1,3 @@
+apis:
+  openApi.json:
+    alias: openapi-definition
