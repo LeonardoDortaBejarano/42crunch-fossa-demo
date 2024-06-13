@@ -21,7 +21,6 @@ jobs:
       - name: Audit API definition for security issues
         uses: 42Crunch/api-security-audit-action-freemium@v1
         with:
-          token: ${{ secrets.API_TOKEN }}
           # Upload results to Github Code Scanning
           # Set to false if you don't have Github Advanced Security enabled.
           upload-to-code-scanning: true
@@ -36,11 +35,17 @@ jobs:
           name: 42Crunch_AuditReport_${{ github.run_id }}
           path: 42Crunch_AuditReport_${{ github.run_id }}.SARIF
           if-no-files-found: error
+      - name: save-pdf-report
+        if: always()        
+        uses: actions/upload-artifact@v3
+        with:
+          name: 42Crunch_AuditReport_${{ github.run_id }}
+          path: 42Crunch_AuditReport_${{ github.run_id }}.pdf
+          if-no-files-found: error
       - name: save-raw-reports
         if: always()        
         uses: actions/upload-artifact@v3
         with:
-          api-token: ${{ secrets.API_TOKEN }}
           name: 42Crunch_AuditReport_${{ github.run_id }}
           path: ${{ github.workspace }}/reports
           if-no-files-found: error    

@@ -1,3 +1,5 @@
 apis:
   openApi.json:
     alias: demo-authentication-service
+  api-specifications/openApi.json:
+    alias: demo-authentication-service1
