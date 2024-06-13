@@ -22,7 +22,6 @@ public class PostDto {
     @Schema(description = "title.", required = true, example = "title")
     private String title;
 
-    
     @NotNull
     @Schema(description = "content.", required = true, example = "Once upon a time..")
     private String content;
