@@ -30,7 +30,7 @@ public class PostController {
     @GetMapping 
     public List<PostDto> getAllPosts() {
         return postService.getAllPosts();
-    }
+    } 
 
     @Operation(security = {@SecurityRequirement(name = "DemoSecurityScheme")})
     @GetMapping("/{id}")
