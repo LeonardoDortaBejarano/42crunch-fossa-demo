@@ -1,0 +1,659 @@
+{
+  "version": "2.0.0",
+  "runtimeConfiguration": {
+    "environment": "default",
+    "laxTestingModeEnabled": false,
+    "logLevel": "error",
+    "logDestination": "stdout+platform",
+    "logMaxFileSize": 2147483648,
+    "requestHeaderNameRequestId": "x-scan-request-id",
+    "requestHeaderNameScenarioId": "x-scan-scenario-id",
+    "requestFlowrate": 100,
+    "requestTimeout": 30,
+    "requestTlsInsecureSkipVerify": true,
+    "responseFollowRedirection": false,
+    "responseMaxBodySizeScan": 10485760,
+    "happyPathOnly": false,
+    "maxScanDuration": 3600,
+    "memoryLimit": 2147483648,
+    "memoryTimeSpan": 10,
+    "reportMaxHttpResponseSizeHappyPath": 8092,
+    "reportMaxBodySizeHappyPath": 8092,
+    "reportMaxHttpResponseSizeTest": 8092,
+    "reportMaxBodySizeTest": 8092,
+    "reportIssuesOnly": false,
+    "reportMaxIssues": 1000,
+    "reportMaxSize": 20971520,
+    "reportGenerateCurlCommand": true
+  },
+  "customizations": {
+    "happyPaths": {
+      "retry": 1,
+      "responsePolicy": {
+        "httpStatusExpected": true,
+        "mustBeConformant": true
+      },
+      "httpStatusExpected": [
+        "2XX",
+        "400",
+        "404"
+      ]
+    },
+    "tests": {
+      "responsePolicy": {
+        "httpStatusExpected": true,
+        "mustBeConformant": true
+      }
+    }
+  },
+  "environments": {
+    "default": {
+      "variables": {
+        "DemoSecurityScheme": {
+          "name": "SCAN42C_SECURITY_DEMOSECURITYSCHEME",
+          "from": "environment",
+          "required": false
+        },
+        "host": {
+          "name": "SCAN42C_HOST",
+          "from": "environment",
+          "required": false,
+          "default": "http://localhost:8080"
+        }
+      }
+    }
+  },
+  "operations": {
+    "createPost": {
+      "operationId": "createPost",
+      "request": {
+        "operationId": "createPost",
+        "auth": [
+          "DemoSecurityScheme"
+        ],
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "createPost",
+            "method": "POST",
+            "url": "{{host}}/posts",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "requestBody": {
+              "mode": "json",
+              "json": {
+                "userId": 35,
+                "title": "The new Title",
+                "content": "ONce upon a time...."
+              }
+            }
+          }
+        },
+        "defaultResponse": "200",
+        "responses": {
+          "200": {
+            "expectations": {
+              "httpStatus": 200
+            }
+          }
+        }
+      },
+      "before": [
+        {
+          "$ref": "#/operations/register/request"
+        }
+      ],
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/createPost/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    },
+    "createUser": {
+      "operationId": "createUser",
+      "request": {
+        "operationId": "createUser",
+        "auth": [
+          "DemoSecurityScheme"
+        ],
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "createUser",
+            "method": "POST",
+            "url": "{{host}}/users",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "requestBody": {
+              "mode": "json",
+              "json": {}
+            }
+          }
+        },
+        "defaultResponse": "200",
+        "responses": {
+          "200": {
+            "expectations": {
+              "httpStatus": 200
+            }
+          }
+        }
+      },
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/createUser/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    },
+    "deletePost": {
+      "operationId": "deletePost",
+      "request": {
+        "operationId": "deletePost",
+        "auth": [
+          "DemoSecurityScheme"
+        ],
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "deletePost",
+            "method": "DELETE",
+            "url": "{{host}}/posts/{id}",
+            "paths": [
+              {
+                "key": "id",
+                "value": 63930922598146936
+              }
+            ]
+          }
+        },
+        "defaultResponse": "200",
+        "responses": {
+          "200": {
+            "expectations": {
+              "httpStatus": 200
+            }
+          }
+        }
+      },
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/deletePost/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    },
+    "deleteUser": {
+      "operationId": "deleteUser",
+      "request": {
+        "operationId": "deleteUser",
+        "auth": [
+          "DemoSecurityScheme"
+        ],
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "deleteUser",
+            "method": "DELETE",
+            "url": "{{host}}/users/{id}",
+            "paths": [
+              {
+                "key": "id",
+                "value": 2026927080439804000
+              }
+            ]
+          }
+        },
+        "defaultResponse": "200",
+        "responses": {
+          "200": {
+            "expectations": {
+              "httpStatus": 200
+            }
+          }
+        }
+      },
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/deleteUser/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    },
+    "getAllPosts": {
+      "operationId": "getAllPosts",
+      "request": {
+        "operationId": "getAllPosts",
+        "auth": [
+          "DemoSecurityScheme"
+        ],
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "getAllPosts",
+            "method": "GET",
+            "url": "{{host}}/posts"
+          }
+        },
+        "defaultResponse": "200",
+        "responses": {
+          "200": {
+            "expectations": {
+              "httpStatus": 200
+            }
+          }
+        }
+      },
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/getAllPosts/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    },
+    "getAllUsers": {
+      "operationId": "getAllUsers",
+      "request": {
+        "operationId": "getAllUsers",
+        "auth": [
+          "DemoSecurityScheme"
+        ],
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "getAllUsers",
+            "method": "GET",
+            "url": "{{host}}/users"
+          }
+        },
+        "defaultResponse": "200",
+        "responses": {
+          "200": {
+            "expectations": {
+              "httpStatus": 200
+            }
+          }
+        }
+      },
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/getAllUsers/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    },
+    "getPostById": {
+      "operationId": "getPostById",
+      "request": {
+        "operationId": "getPostById",
+        "auth": [
+          "DemoSecurityScheme"
+        ],
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "getPostById",
+            "method": "GET",
+            "url": "{{host}}/posts/{id}",
+            "paths": [
+              {
+                "key": "id",
+                "value": 6548770615794456000
+              }
+            ]
+          }
+        },
+        "defaultResponse": "200",
+        "responses": {
+          "200": {
+            "expectations": {
+              "httpStatus": 200
+            }
+          }
+        }
+      },
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/getPostById/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    },
+    "getUserById": {
+      "operationId": "getUserById",
+      "request": {
+        "operationId": "getUserById",
+        "auth": [
+          "DemoSecurityScheme"
+        ],
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "getUserById",
+            "method": "GET",
+            "url": "{{host}}/users/{id}",
+            "paths": [
+              {
+                "key": "id",
+                "value": 35
+              }
+            ]
+          }
+        },
+        "defaultResponse": "200",
+        "responses": {
+          "200": {
+            "expectations": {
+              "httpStatus": 200
+            }
+          }
+        }
+      },
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/getUserById/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    },
+    "login": {
+      "operationId": "login",
+      "request": {
+        "operationId": "login",
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "login",
+            "method": "POST",
+            "url": "{{host}}/auth/login",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "requestBody": {
+              "mode": "json",
+              "json": {
+                "password": "one",
+                "username": "one"
+              }
+            }
+          }
+        },
+        "defaultResponse": "200",
+        "responses": {
+          "200": {
+            "expectations": {
+              "httpStatus": 200
+            }
+          }
+        }
+      },
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/login/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    },
+    "register": {
+      "operationId": "register",
+      "request": {
+        "operationId": "register",
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "register",
+            "method": "POST",
+            "url": "{{host}}/auth/register",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "requestBody": {
+              "mode": "json",
+              "json": {
+                "email": "leo@test.com",
+                "password": "leo",
+                "username": "leo"
+              }
+            }
+          }
+        },
+        "defaultResponse": "200",
+        "responses": {
+          "200": {
+            "expectations": {
+              "httpStatus": 200
+            }
+          }
+        }
+      },
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/register/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    },
+    "updatePost": {
+      "operationId": "updatePost",
+      "request": {
+        "operationId": "updatePost",
+        "auth": [
+          "DemoSecurityScheme"
+        ],
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "updatePost",
+            "method": "PUT",
+            "url": "{{host}}/posts/{id}",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "paths": [
+              {
+                "key": "id",
+                "value": 4668932623554733000
+              }
+            ],
+            "requestBody": {
+              "mode": "json",
+              "json": {}
+            }
+          }
+        },
+        "defaultResponse": "200",
+        "responses": {
+          "200": {
+            "expectations": {
+              "httpStatus": 200
+            }
+          }
+        }
+      },
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/updatePost/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    },
+    "updateUser": {
+      "operationId": "updateUser",
+      "request": {
+        "operationId": "updateUser",
+        "auth": [
+          "DemoSecurityScheme"
+        ],
+        "request": {
+          "type": "42c",
+          "details": {
+            "operationId": "updateUser",
+            "method": "PUT",
+            "url": "{{host}}/users/{id}",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "paths": [
+              {
+                "key": "id",
+                "value": 2151526804477584100
+              }
+            ],
+            "requestBody": {
+              "mode": "json",
+              "json": {}
+            }
+          }
+        },
+        "defaultResponse": "200",
+        "responses": {
+          "200": {
+            "expectations": {
+              "httpStatus": 200
+            }
+          }
+        }
+      },
+      "scenarios": [
+        {
+          "key": "happy.path",
+          "requests": [
+            {
+              "fuzzing": true,
+              "$ref": "#/operations/updateUser/request"
+            }
+          ],
+          "fuzzing": true
+        }
+      ]
+    }
+  },
+  "authenticationDetails": [
+    {
+      "DemoSecurityScheme": {
+        "type": "bearer",
+        "default": "DemoSecurityScheme",
+        "credentials": {
+          "DemoSecurityScheme": {
+            "credential": "{{DemoSecurityScheme}}",
+            "description": "DemoSecurityScheme security",
+            "requests": [
+              {
+                "$ref": "#/operations/login/request",
+                "environment": {
+                  "username": "one",
+                  "password": "one"
+                },
+                "responses": {
+                  "200": {
+                    "expectations": {
+                      "httpStatus": 200
+                    },
+                    "variableAssignments": {
+                      "DemoSecurityScheme": {
+                        "in": "body",
+                        "from": "response",
+                        "contentType": "json",
+                        "path": {
+                          "type": "jsonPointer",
+                          "value": "/token"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

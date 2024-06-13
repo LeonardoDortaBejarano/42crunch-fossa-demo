@@ -8,6 +8,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,14 +23,28 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.demo.post.Post;
 
+import io.micrometer.common.lang.NonNull;
+
 @Entity
 public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userID;
 
-    
+    /* @NotBlank
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Username must be alphanumeric")
+    @Size(max = 50, message = "Username must be less than 50 characters") */
+    private String username;
 
+    /* @NotBlank
+    @Email */
+    private String email;
+    private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Post> posts;
+
+    
     public User() {
         this.role = Role.USER;
     }
@@ -42,12 +60,6 @@ public class User implements UserDetails{
         this.role = role;
     }
 
-    private String username;
-    private String email;
-    private String password;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Post> posts;
 
     public Integer getUserID() {
         return userID;

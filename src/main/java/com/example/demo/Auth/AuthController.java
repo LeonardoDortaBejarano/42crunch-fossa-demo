@@ -7,6 +7,7 @@ import com.example.demo.user.User;
 
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import jakarta.validation.Valid;
 
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("auth")
 
+
 public class AuthController {
 
     @Autowired
@@ -34,7 +36,7 @@ public class AuthController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<AuthReponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<AuthReponse> login(@RequestBody @Valid LoginRequest loginRequest) {
         String token = this.authService.login(loginRequest); 
         if (token != null) {
             return new ResponseEntity<AuthReponse>(new AuthReponse(token), HttpStatus.OK);
@@ -43,7 +45,7 @@ public class AuthController {
     }
 
     @PostMapping("register")
-    public ResponseEntity<AuthReponse> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<AuthReponse> register(@RequestBody @Valid RegisterRequest registerRequest) {
         String token = this.authService.register(registerRequest);        
         return new ResponseEntity<AuthReponse>(new AuthReponse(token), HttpStatus.OK);
     }

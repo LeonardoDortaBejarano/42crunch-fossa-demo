@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+
 @RestController
 @RequestMapping("/posts")
 public class PostController {
@@ -20,22 +26,26 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @GetMapping
+    @Operation(security = {@SecurityRequirement(name = "DemoSecurityScheme")})
+    @GetMapping 
     public List<PostDto> getAllPosts() {
         return postService.getAllPosts();
     }
 
+    @Operation(security = {@SecurityRequirement(name = "DemoSecurityScheme")})
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> getPostById(@PathVariable Integer id) {
         PostDto post = postService.getPostById(id);
         return post != null ? ResponseEntity.ok(post) : ResponseEntity.notFound().build();
     }
 
+    @Operation(security = {@SecurityRequirement(name = "DemoSecurityScheme")})
     @PostMapping
-    public PostDto createPost(@RequestBody PostDto postDto) {
+    public PostDto createPost(@RequestBody /* @Valid */ PostDto postDto) {
         return postService.savePost(postDto);
     }
 
+    @Operation(security = {@SecurityRequirement(name = "DemoSecurityScheme")})
     @PutMapping("/{id}")
     public ResponseEntity<PostDto> updatePost(@PathVariable Integer id, @RequestBody PostDto postDto) {
         PostDto existingPost = postService.getPostById(id);
@@ -46,6 +56,7 @@ public class PostController {
         return ResponseEntity.ok(postService.savePost(postDto));
     }
 
+    @Operation(security = {@SecurityRequirement(name = "DemoSecurityScheme")})
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Integer id) {
         postService.deletePost(id);

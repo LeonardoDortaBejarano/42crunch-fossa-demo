@@ -1,18 +1,32 @@
 package com.example.demo.Auth;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AdditionalPropertiesValue;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 /* import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
  */
+@JsonIgnoreProperties(ignoreUnknown = false)
 public class RegisterRequest {
-/*     @Size(min = 3, max = 20)
+
     @NotNull
-    @NotEmpty
-    @NotBlank */
-    private String username;
-    private String password;
+    @Schema(description = "Email of the user.", required = true, example = "test@test.com")
     private String email;
+
+    @NotNull
+    @Schema(description = "username.", required = true, example = "test")
+    private String username;
+
+    @NotNull
+    @Schema(description = "password", required = true, example = "test")
+    private String password;
 
     public RegisterRequest() {
     }
