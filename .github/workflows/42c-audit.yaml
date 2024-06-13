@@ -35,13 +35,6 @@ jobs:
           name: 42Crunch_AuditReport_${{ github.run_id }}
           path: 42Crunch_AuditReport_${{ github.run_id }}.SARIF
           if-no-files-found: error
-      - name: save-pdf-report
-        if: always()        
-        uses: actions/upload-artifact@v3
-        with:
-          name: 42Crunch_AuditReport_${{ github.run_id }}
-          path: 42Crunch_AuditReport_${{ github.run_id }}.pdf
-          if-no-files-found: error
       - name: save-raw-reports
         if: always()        
         uses: actions/upload-artifact@v3
