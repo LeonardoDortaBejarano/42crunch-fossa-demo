@@ -19,33 +19,22 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Audit API definition for security issues
-        uses: 42Crunch/api-security-audit-action-freemium@v1
+        uses: 42Crunch/api-security-audit-action@96228d9c48873fe001354047d47fb62be42abeb1
         with:
-          # Upload results to Github Code Scanning
-          # Set to false if you don't have Github Advanced Security enabled.
+          # Please create free account at https://platform.42crunch.com/register
+          # Follow these steps to configure API_TOKEN https://docs.42crunch.com/latest/content/tasks/integrate_github_actions.htm
+          api-token: ${{ secrets.API_TOKEN }}
+          # Fail if any OpenAPI file scores lower than 75
+          min-score: 75
+          # Upload results to Github code scanning
           upload-to-code-scanning: true
-          log-level: info
-          sarif-report: 42Crunch_AuditReport_${{ github.run_id }}.SARIF
-          export-as-pdf: 42Crunch_AuditReport_${{ github.run_id }}.pdf
-          audit-reports-dir: ${{ github.workspace }}/reports
-      - name: save-sarif-report
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: 42Crunch_AuditReport_${{ github.run_id }}
-          path: 42Crunch_AuditReport_${{ github.run_id }}.SARIF
-          if-no-files-found: error
-      - name: save-pdf-report
-        if: always()        
-        uses: actions/upload-artifact@v3
-        with:
-          name: 42Crunch_AuditReport_${{ github.run_id }}
-          path: 42Crunch_AuditReport_${{ github.run_id }}.pdf
-          if-no-files-found: error
+          # Github token for uploading the results
+          # github-token: ${{ github.token }}
       - name: save-raw-reports
         if: always()        
         uses: actions/upload-artifact@v3
         with:
+          api-token: ${{ secrets.API_TOKEN }}
           name: 42Crunch_AuditReport_${{ github.run_id }}
           path: ${{ github.workspace }}/reports
           if-no-files-found: error    
